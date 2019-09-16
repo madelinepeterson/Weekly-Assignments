@@ -1,5 +1,5 @@
-*This assignment is to explore a few different tools that can be piped together to reorganize or manipulate the data in your files.
-*The data consists of a gene sequence for a variety of different animals.
+**This assignment is to explore a few different tools that can be piped together to reorganize or manipulate the data in your files.
+The data consists of a gene sequence for a variety of different animals.
 
 One thing that someone may want to do is reorder the sequences by sequence length and work with only the 5 shortest sequences and putting them into their own folder.
 
