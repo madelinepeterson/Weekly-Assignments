@@ -27,6 +27,7 @@ efetch -db=sequences -id="NC_008535.1" -format=gb  -sort="Taxonomy ID"
 **Using the in-class example from the Handling Sequence Data, we first need to download the gb file, then, after installing the custom script, we can use the custom script to convert the gb file to a fasta file.
 NOTE: the custom script needs to be saved IN your folder, or you will get errors because it cannot be found.
 
+ANSWER
 efetch -db=sequences -id=NC_008535.1 -format=gb>coffee_chloroplast.gbk
 *This created my readable file that I can now use the grep tool to search
 
@@ -47,10 +48,11 @@ grep -w "protein" coffee_chloroplast.gbk
 *finds all of the lines with the word protein in the name (-c counted 137)
 here i can see the photosystem proteins. In the front of (almost) all these lines there is a /product (-c counted 138)
 
+ANSWER
  grep -w "/product" coffee_chloroplast.gbk > coffee_chloroplast_products.gbk
  *created a file that has a list of all the products (proteins)
  grep -w "photosystem" coffee_chloroplast_products.gbk
- *which then allows me to search my new file for the specifuc proteins i want. (-c shows there are 22)
+ *which then allows me to search my new file for the specifIc proteins i want. (-c shows there are 22)
  
  I can use grep -B3 to also get the protein ID name for a specific protein, but still need to link it to obtain the sequence for that specific protein.
  
@@ -69,9 +71,10 @@ grep -A1 "ATP synthase CF1 alpha subunit" coffee_chloroplast.gbk
 YP_817467.1
 *while not pretty, it gives me the protein_id, which I can then use to search it on it's own
 
+ANSWER
 efetch -db=protein -id=YP_817467 -format=gb > ATPsynthaseSeq.gbk
 *creating file for the protein seq
-
+ideally would like a way to extract the seq data by itself
 
 
 
