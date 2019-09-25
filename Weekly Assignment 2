@@ -1,9 +1,11 @@
 Trying to code to:
 -fetch metadata
--sort by gene to show how many genes for that sequence
--sort and pull photosystem subunits
--pull the sequence for the ATP synthase CF1 beta subunit protein in its own folder
+-sort by gene to show how many genes for that sequence (can count lines beginning with >)
+-sort and pull "photosystem subunits" through sort
+-pull the sequence for the ATP synthase CF1 beta subunit protein in its own fasta folder
 
+
+**attempts at finding the protein data
 efetch -db=sequences -id= NC_008535.1 -format=gb | elink -db=protein | xtract -pattern Feature -sep"\n" -element= CDS
 *this code did not work
 
@@ -21,3 +23,4 @@ esearch -db=sequences -query="NC_008535.1" -sort="Taxonomy ID"
 
 efetch -db=sequences -id="NC_008535.1" -format=gb  -sort="Taxonomy ID"
 *fails and says unknown sort option
+
