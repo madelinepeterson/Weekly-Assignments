@@ -1,0 +1,8 @@
+Trying to code to:
+-fetch metadata
+-sort by gene to show how many genes for that sequence
+-sort and pull photosystem subunits
+-pull the sequence for the ATP synthase CF1 beta subunit protein in its own folder
+
+efetch -db=sequences -id= NC_008535.1 -format=gb | elink -db=protein | xtract -pattern Feature -sep"\n" -element= CDS
+*this code did not work
