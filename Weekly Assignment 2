@@ -6,3 +6,18 @@ Trying to code to:
 
 efetch -db=sequences -id= NC_008535.1 -format=gb | elink -db=protein | xtract -pattern Feature -sep"\n" -element= CDS
 *this code did not work
+
+esearch -db=sequences -query= "NC_008535.1" -sort=gene
+*this code says i'm missing an argument
+
+esearch -db=gene -query= "NC_008535.1" -sort=Name
+*fails and says i need an argument after -query
+
+esearch -db=gene -query="NC_008535."
+*got stuck and didn't give me output
+
+esearch -db=sequences -query="NC_008535.1" -sort="Taxonomy ID"
+*fails and says invalid -db name
+
+efetch -db=sequences -id="NC_008535.1" -format=gb  -sort="Taxonomy ID"
+*fails and says unknown sort option
