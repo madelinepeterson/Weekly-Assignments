@@ -24,3 +24,54 @@ esearch -db=sequences -query="NC_008535.1" -sort="Taxonomy ID"
 efetch -db=sequences -id="NC_008535.1" -format=gb  -sort="Taxonomy ID"
 *fails and says unknown sort option
 
+**Using the in-class example from the Handling Sequence Data, we first need to download the gb file, then, after installing the custom script, we can use the custom script to convert the gb file to a fasta file.
+NOTE: the custom script needs to be saved IN your folder, or you will get errors because it cannot be found.
+
+efetch -db=sequences -id=NC_008535.1 -format=gb>coffee_chloroplast.gbk
+*This created my readable file that I can now use the grep tool to search
+
+ grep -c "gene" coffee_chloroplast.gbk
+**counted the number of times "gene" was found in the genbank file, but is double counted since it includes another column of data description.
+
+grep -w "/gene" coffee_chloroplast.gbk
+the gre -c command counted 294 genes.
+**displays the actual genes since /gene is the label before it lists the gene name after it.
+
+ grep -w "/gene" coffee_chloroplast.gbk | elink -target name |efetch -format xml
+*fails, db not found
+
+ esearch -db protein grep -w "/gene" coffee_chloroplast.gbk | elink -target name |efetch -format xml
+*fails
+
+grep -w "protein" coffee_chloroplast.gbk
+*finds all of the lines with the word protein in the name (-c counted 137)
+here i can see the photosystem proteins. In the front of (almost) all these lines there is a /product (-c counted 138)
+
+ grep -w "/product" coffee_chloroplast.gbk > coffee_chloroplast_products.gbk
+ *created a file that has a list of all the products (proteins)
+ grep -w "photosystem" coffee_chloroplast_products.gbk
+ *which then allows me to search my new file for the specifuc proteins i want. (-c shows there are 22)
+ 
+ I can use grep -B3 to also get the protein ID name for a specific protein, but still need to link it to obtain the sequence for that specific protein.
+ 
+ esearch -db=nucleotide -query=NC_008535.1 | grep -w -A10 "ATP synthase CF1 alpha subunit" > ATPsynthase_seq.gbk
+*fails, does not save anything into the file.
+
+/translation will show the first line of the protein's sequence, but still needs to load the whole sequence.
+ 
+esearch -db=protein -query=NC_008535.1 | grep -w "ATP synthase CF1 alpha subunit" | elink -target origin| efetch -format xml
+*fails, states db value not found in link input
+
+efetch -db=sequences -id=NC_008535.1 -format=gbk | grep -A1 "ATP synthaseCF1 alpha subunit" > alpha_subunit.gbk
+*fails to pull any information
+
+grep -A1 "ATP synthase CF1 alpha subunit" coffee_chloroplast.gbk
+YP_817467.1
+*while not pretty, it gives me the protein_id, which I can then use to search it on it's own
+
+efetch -db=protein -id=YP_817467 -format=gb > ATPsynthaseSeq.gbk
+*creating file for the protein seq
+
+
+
+
