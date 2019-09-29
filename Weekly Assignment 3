@@ -1,0 +1,8 @@
+**Goal is to write a summary of the sequencing techniques discussed in the "Evolution of DNA Sequencing Methods" Youtube video.
+
+In the 'proto-sequencing' era very short sequences of dna were able to be found, but it seems like it was only able to discover under ten nucleotides through chemical methods.
+
+In the next generation of 'manual sequencing' the Sanger method became the most popular method because of it's simpicity as well as being less toxic than similar methods. This method worked by identifying individual bases through chain-terminating reactions. DNA would be placed inside of a tube where it was put through heating cycles allowing it to synthesize more and more strands of DNA.  Initially, the deoxynucleotides had to be run separately for each nucleotide type, marking that nucleotide and preventing further synthesis. Later on dye-tagged deoxynucleotides labeled each nt type with a different colored label, allowing the different labels to all be run together. Eventually, the tube would contain short sequences of newly synthesized DNA were there was likely a labeled deoxynucleotide in place of every nucleotide. They were then run on a gel that separated the strands by size, thus displating the dyed tags in order of DNA sequence. Once the specially dye-tagged dnt were created, a machine was able to detect the color bands and output the sequence. Eventually a machine was able to automate the whole process.
+The strengths here are obvious, a visible and machine-readable and ordered sequence. The weaknesses here are the time it takes to produce a short sequence and the resources it takes to produce (having to mix and PCR so many tubes and pour and run so many gels). Even when automation became available, there was still a limiting step
+
+
