@@ -1,4 +1,4 @@
-**Goal is to write a summary of the sequencing techniques discussed in the "Evolution of DNA Sequencing Methods" Youtube video.
+**Goal is to write a summary of the sequencing techniques discussed in the "Evolution of DNA Sequencing Methods" -Jonathan Elsen Youtube video.
 
 In the 'proto-sequencing' era very short sequences of dna were able to be found, but it seems like it was only able to discover under ten nucleotides through chemical methods.
 
@@ -14,5 +14,8 @@ References also from: https://en.wikipedia.org/wiki/Illumina_dye_sequencing
 
 PacBio
 Single molecule sequences takes a single DNA template and uses a camera to track addition of each nt by the DNA polymerase. The DNA polymerase is somehow attached to a hole in a plane, and the DNA template is inserted in one end. Using labeled nt, the addition of each new nt will be in line with the plane, making is simple to track and record the identity of each new addition in order.
-An advantage of this method is the ability to sequence without having to cycle anything; this method is done continuously and collecting data the whole time. This also means that this method is extremely quick and can record thousands of bases at a time giving long reads. This method works well to collect epigentetic data. Detection of changes in the timing of synthesis have allowed for researchers to study DNA modification for epigenetic data.
+An advantage of this method is the ability to sequence without having to cycle anything; this method is done continuously and collecting data the whole time. This also means that this method is extremely quick and can record thousands of bases at a time giving long reads. This method works well to collect epigentetic data. Detection of changes in the timing of synthesis have allowed for researchers to study DNA modification for epigenetic data. Problems with collection can arise due to breakages in the DNA template.
+
+Nano Pore
+In this other single molecule sequencing system, a protein membrane pore is adhered to a plane that contains a hole. DNA is inserted through one end of the pore, while a machine sensor detects the conformational or chemical changes of the pore as different nucleotides pass through it. The different shifts in the pore are associated with specific nucleotides, thus allowing for the sequence of DNA to be read in order. Like the PacBio method, this allows for reads of long strands of a single DNA. Real time sequencing, in a device that can be hooked up to a computer allows extremely quick (a couple hours) sequencing and shows promise of being a portable sequencing device. At the time the youtube video was created, Elsen points out that this is not the most accurate device and is also very expensive per sequence, but has the potential to get better as the technology develops. While it's very quick, it's discussed it is more useful for "simple" DNA at this time.
 
