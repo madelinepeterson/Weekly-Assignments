@@ -27,6 +27,7 @@ From here, the fastqc report should tell you about adapter contamination, and in
 https://www.biostars.org/p/4798/  <-- link to website about adaptor types and finding them on fastqc
 Helpful github note section: **Quality Assessment and Quality Control of Sequencing Data
 
+Helpful github note section: **Mapping-Reads-to-Reference
 Code to trim the adaptors. Are the adaptors the same?
 
 cutadapt -q 20,20 -a CTGTCTCTTATACACATCTCCGAGCCCACGAGAC -A CTGTCTCTTATACACATCTGACGCTGCCGACGA -m 50 --max-n 0 -o C_ferri_R1.cutadapt.fastq -p C_ferri_R2.cutadapt.fastq C_ferri_R1.fastq C_ferri_R2.fastq
