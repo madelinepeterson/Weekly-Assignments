@@ -2,10 +2,10 @@ Assignment follows downloading a reference script and raw seq data, doing a QC/Q
 
 Note: In the scratch file > weekly_assignment_4
 
-Using efetch to download the seq data for Carboxydothermus hydrogenoformans Z2901 from NCBI. Note the importance of format, we want to align sequences, so fasta is a better format than a gb file.
+Using efetch to download the reference seq data for Carboxydothermus hydrogenoformans Z2901 from NCBI. Note the importance of format, we want to align sequences, so fasta is a better format than a gb file.
 1) efetch -db=sequences -id=CP000141.1 -format=fasta > Z2901.fasta
 
-Using gdown we can download the reference data (forward and reverse) from google drive files. The code in the middle is switched out to download different files, and the ending names the file in your directory. I saved the file type as fastq and no .gz because we were told it was not a zippped file.
+Using gdown we can download the raw read data (forward and reverse) from google drive files. The code in the middle is switched out to download different files, and the ending names the file in your directory. I saved the file type as fastq and no .gz because we were told it was not a zippped file.
 
 R1
 gdown.pl https://drive.google.com/file/d/1PWWO5wVRRThLBXXEZjyWZHIb9udVcnCS/edit C_ferri_R1.fastq
@@ -18,6 +18,10 @@ fastqc C_ferri_R1.fastq
 fastqc C_ferri_R2.fastq
 fastqc Z2901.fasta
 
+**ANSWERS:
+Were these reads of high quality?
+Was trimming required?
+
 From here, the fastqc report should tell you about adapter contamination, and in that case how to remove and trim them. Personal computer unable to access FastQC  display. attempting gdown of new files ending in .gz, but did nothing because the files were not zipped.
 
 https://www.biostars.org/p/4798/  <-- link to website about adaptor types and finding them on fastqc
@@ -25,6 +29,17 @@ Helpful github note section: **Quality Assessment and Quality Control of Sequenc
 
 Code to trim the adaptors. Are the adaptors the same?
 
-cutadapt -q 20,20 -a CTGTCTCTTATACACATCTCCGAGCCCACGAGAC -A CTGTCTCTTATACACATCTGACGCTGCCGACGA -m 50 --max-n 0 -o T1_R1.cutadapt.fastq -p T1_R2.cutadapt.fastq T1_R1.fastq.gz T1_R2.fastq.gz
+cutadapt -q 20,20 -a CTGTCTCTTATACACATCTCCGAGCCCACGAGAC -A CTGTCTCTTATACACATCTGACGCTGCCGACGA -m 50 --max-n 0 -o C_ferri_R1.cutadapt.fastq -p C_ferri_R2.cutadapt.fastq C_ferri_R1.fastq C_ferri_R2.fastq
 
+**ANSWERS
+How many reads contained adaptors for each file?
 
+Need to then index the reference to be able to use it for alignment.
+bowtie2-build Z2901.fasta Z2901_indexed
+
+Then the indexed reference can be used to help align the raw reads.
+bowtie2 -x indexed_Z2901 -1 C_ferri_R1.fastq -2 C_ferri_R2.fastq -S mapped_C_ferri.sam
+
+**ANSWERS
+What percentage of the reads mapped to the reference genome?
+What percentage of reads did not map to the reference genome?
