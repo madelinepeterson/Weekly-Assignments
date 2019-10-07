@@ -1,0 +1,11 @@
+Assignment follows downloading a reference script and raw seq data, doing a QC/QA analysis, trimming and removing adaptors form the raw seq data.
+
+Using efetch to download the seq data for Carboxydothermus hydrogenoformans Z2901 from NCBI. Note the importance of format, we want to align sequences, so fasta is a better format than a gb file.
+1) efetch -db=sequences -id=CP000141.1 -format=fasta > Z2901.fasta
+
+Using gdown we can download data from google drive files.The code in the middle is switched out to download different files, and the ending names the file in your directory. I saved the file type as fastq and no .gz because we were told it was not a zippped file.
+2)
+R1
+gdown.pl https://drive.google.com/file/d/1PWWO5wVRRThLBXXEZjyWZHIb9udVcnCS/edit C_ferri_R1.fastq
+R2
+gdown.pl https://drive.google.com/file/d/1mZFvpSIctuBihkOlQX9vhrkxng3cRmvK/edit C_ferri_R2.fastq
