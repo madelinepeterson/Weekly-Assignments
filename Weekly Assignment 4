@@ -55,5 +55,7 @@ Then the indexed reference can be used to help align the raw reads.
 bowtie2 -x Z2901_indexed -1 C_ferri_R1.cutadapt.fastq -2 C_ferri_R2.cutadapt.fastq -S mapped_C_ferri.sam
 
 **ANSWERS
-What percentage of the reads mapped to the reference genome?
-What percentage of reads did not map to the reference genome?
+*What percentage of the reads mapped to the reference genome?
+~75%-77%(aligned 1 time + >1 times)
+*What percentage of reads did not map to the reference genome?
+~25%
