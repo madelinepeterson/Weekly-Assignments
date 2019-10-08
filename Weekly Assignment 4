@@ -1,6 +1,7 @@
 Assignment follows downloading a reference script and raw seq data, doing a QC/QA analysis, trimming and removing adaptors form the raw seq data.
 
 Note: In the scratch file > weekly_assignment_4
+Note: Don't know how to access files through icons, so redownloaded files into the normal directory
 
 Using efetch to download the reference seq data for Carboxydothermus hydrogenoformans Z2901 from NCBI. Note the importance of format, we want to align sequences, so fasta is a better format than a gb file.
 1) efetch -db=sequences -id=CP000141.1 -format=fasta > Z2901.fasta
@@ -17,31 +18,41 @@ The command fastqc goes through and measures the quality of ALL of the reads, th
 fastqc C_ferri_R1.fastq
 fastqc C_ferri_R2.fastq
 
+NOTE: In order to view the results of the FastQC file you need to open the newly created .html of that data. Clicking and opening this from the computer directory will show the output.
+
 (this one should already be trimmed because it's the ref seq?)
 fastqc Z2901.fasta
 
-**ANSWERS:
-Were these reads of high quality?
-Was trimming required?
-
 From here, the fastqc report should tell you about adapter contamination, and in that case how to remove and trim them. Personal computer unable to access FastQC  display. attempting gdown of new files ending in .gz, but did nothing because the files were not zipped.
+
+**ANSWERS:
+*Were these reads of high quality?
+Yes, both of the reads showed high quality status in all of the FastQC report categories. There was an error shown in the "overrrepresented Sequence" section in both, but this was due to primer sequences, which we can trim.
+*Was trimming required?
+Yes, the primers need to be removed from the sequences. 
+
+Note: Four sequences were shown to appear in high counts. The top two had very similar sequences, so I copied the sequence they both shared up until they began to diverge. I didn't do anything with the other sequences due to their much smaller counts compared to the top two (GATCGGAAGAGCGGTTCAGCAGGAATGCCGAGACCGATT) this was only for primer 2, the adapter sequence for primer 1 showed the top adapter contamination to be (GATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCG).
+
+Note: It appears that the second top contamination hit was is only a base or a few bases different than the top hit-- potentially misreads or altered primers? R1 has primer 2 R2 has primer 1
 
 https://www.biostars.org/p/4798/  <-- link to website about adaptor types and finding them on fastqc
 Helpful github note section: **Quality Assessment and Quality Control of Sequencing Data
 
 Helpful github note section: **Mapping-Reads-to-Reference
-Code to trim the adaptors. Are the adaptors the same?
+Code to trim the adaptors.
 
-cutadapt -q 20,20 -a CTGTCTCTTATACACATCTCCGAGCCCACGAGAC -A CTGTCTCTTATACACATCTGACGCTGCCGACGA -m 50 --max-n 0 -o C_ferri_R1.cutadapt.fastq -p C_ferri_R2.cutadapt.fastq C_ferri_R1.fastq C_ferri_R2.fastq
+cutadapt -q 20,20 -a GATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCG -A GATCGGAAGAGCGGTTCAGCAGGAATGCCGAGACCGATT -m 50 --max-n 0 -o C_ferri_R1.cutadapt.fastq -p C_ferri_R2.cutadapt.fastq C_ferri_R1.fastq C_ferri_R2.fastq
 
 **ANSWERS
-How many reads contained adaptors for each file?
+*How many reads contained adaptors for each file?
+ Read 1 with adapter:                  13,544 (1.4%)
+ Read 2 with adapter:                  17,204 (1.7%)
 
 Need to then index the reference to be able to use it for alignment.
 bowtie2-build Z2901.fasta Z2901_indexed
 
-Then the indexed reference can be used to help align the raw reads.
-bowtie2 -x indexed_Z2901 -1 C_ferri_R1.fastq -2 C_ferri_R2.fastq -S mapped_C_ferri.sam
+Then the indexed reference can be used to help align the raw reads. 
+bowtie2 -x Z2901_indexed -1 C_ferri_R1.cutadapt.fastq -2 C_ferri_R2.cutadapt.fastq -S mapped_C_ferri.sam
 
 **ANSWERS
 What percentage of the reads mapped to the reference genome?
