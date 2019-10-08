@@ -16,6 +16,8 @@ The command fastqc goes through and measures the quality of ALL of the reads, th
 
 fastqc C_ferri_R1.fastq
 fastqc C_ferri_R2.fastq
+
+(this one should already be trimmed because it's the ref seq?)
 fastqc Z2901.fasta
 
 **ANSWERS:
