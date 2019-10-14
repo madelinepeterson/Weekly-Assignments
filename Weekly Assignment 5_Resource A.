@@ -32,8 +32,12 @@ To assess the quality of the assembly, we can use QUAST
   quast contigs.fasta quast.contigs
 We can review the output by clicking report.html in our desktop files.
 
-**Answers
-1)
+RESULTS
+48 contigs
+43.81% GC content
+576084 largest contig
+239015 N50
+
 
   
 
