@@ -12,6 +12,7 @@ https://drive.google.com/a/mtu.edu/file/d/1RoVAcT0IXV2DT9l5qWoI2NjPuJltpWDf/view
 Then we'll need to unzip the files.
   gunzip D23_R1.fastq.gz
   gunzip D23_R2.fastq.gz
+  
 And transforming these files into readable .fastq files.
 
 Now that we have the .fatsq files, we can assess the quality of the data.
@@ -21,6 +22,18 @@ Which we can then open in by clicking on the html files in our desktop files usi
 The report shows there are quality issues in both of the reads towards the end of the sequences. We can trim these bad quality sections and cut the adapter sequences. The adapter sequences are for those used in Illumina sequencing.
   cutadapt -q 20,20 -a CTGTCTCTTATACACATCTCCGAGCCCACGAGAC -A CTGTCTCTTATACACATCTGACGCTGCCGACGA -m 50 --max-n 0 -o D23_R1.cutadapt.fastq -p D23_R2.cutadapt.fastq D23_R1.fastq D23_R2.fastq
   
+Since there is no reference sequence for this data, it will be assembled de novo usin SPAdes. First we must activate the "de novo" program.
+  conda activate de_novo
+Since we don't know what k-mer length will provide the best quality output, we can assign it to run a number of different k-mers at once. Running it carefully will run more slowly, but provide better qulity output.
+  spades.py -k 21,51,71,91,111,127 --careful --pe1-1 D23_R1.cutadapt.fastq --pe1-2 D23_R2.cutadapt.fastq -o D23_spades.output
+
+To assess the quality of the assembly, we can use QUAST
+  cd D23_spades.output
+  quast contigs.fasta quast.contigs
+We can review the output by clicking report.html in our desktop files.
+
+**Answers
+1)
 
   
 
