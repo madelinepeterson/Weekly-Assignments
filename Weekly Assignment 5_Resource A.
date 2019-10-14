@@ -1,6 +1,7 @@
 This assignment includes the initial steps in downloading, trimming, and assembling raw data
 
-Dowloading data:
+Dowloading data in the 30 day temp file:
+mkdir resource_announcement
 R1
 https://drive.google.com/a/mtu.edu/file/d/1nu6aYpmOFep5huUw1gyfcXjo-fpAqg0L/view?usp=sharing
   gdown.pl https://drive.google.com/file/d/1nu6aYpmOFep5huUw1gyfcXjo-fpAqg0L/edit D23_R1.fastq.gz
@@ -17,7 +18,13 @@ Now that we have the .fatsq files, we can assess the quality of the data.
   fastqc D23_R1.fastq
   fastqc D23_R2.fastq
 Which we can then open in by clicking on the html files in our desktop files using WinSCP, showing us the quality report.
-The report shows there are quality issues in both of the reads towards the end of the sequences.
+The report shows there are quality issues in both of the reads towards the end of the sequences. We can trim these bad quality sections and cut the adapter sequences. The adapter sequences are for those used in Illumina sequencing.
+  cutadapt -q 20,20 -a CTGTCTCTTATACACATCTCCGAGCCCACGAGAC -A CTGTCTCTTATACACATCTGACGCTGCCGACGA -m 50 --max-n 0 -o D23_R1.cutadapt.fastq -p D23_R2.cutadapt.fastq D23_R1.fastq D23_R2.fastq
+  
+
+  
+
+
 
 
 
