@@ -1,0 +1,25 @@
+This assignment includes the initial steps in downloading, trimming, and assembling raw data
+
+Dowloading data:
+R1
+https://drive.google.com/a/mtu.edu/file/d/1nu6aYpmOFep5huUw1gyfcXjo-fpAqg0L/view?usp=sharing
+  gdown.pl https://drive.google.com/file/d/1nu6aYpmOFep5huUw1gyfcXjo-fpAqg0L/edit D23_R1.fastq.gz
+R2
+https://drive.google.com/a/mtu.edu/file/d/1RoVAcT0IXV2DT9l5qWoI2NjPuJltpWDf/view?usp=sharing
+  gdown.pl https://drive.google.com/file/d/1RoVAcT0IXV2DT9l5qWoI2NjPuJltpWDf/edit D23_R2.fastq.gz
+
+Then we'll need to unzip the files.
+  gunzip D23_R1.fastq.gz
+  gunzip D23_R2.fastq.gz
+And transforming these files into readable .fastq files.
+
+Now that we have the .fatsq files, we can assess the quality of the data.
+  fastqc D23_R1.fastq
+  fastqc D23_R2.fastq
+Which we can then open in by clicking on the html files in our desktop files using WinSCP, showing us the quality report.
+The report shows there are quality issues in both of the reads towards the end of the sequences.
+
+
+
+
+
