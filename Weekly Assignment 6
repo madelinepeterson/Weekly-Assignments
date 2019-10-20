@@ -1,8 +1,29 @@
-**This assignment is a download of the identified proteins from an unknown organism. Using reference sequences in BLAST, this code will identify heat shock proteins and related proteins.
+**This assignment is a download of the identified proteins from an unknown organism. Using chosen and specific reference sequences in BLAST, this code will identify heat shock proteins and related proteins.
 
 Downloading the list of identified protein sequences from the organism:
   wget https://github.com/stechtmann/BL4300-5300/raw/master/data/Weekly_Assignment_data/Unk_therm.faa
 
-Downloading a list of reference proteins in order to then create a database specifically for the purpose of identifying specific proteins.
+Downloading a list of reference proteins 
   wget https://github.com/stechtmann/BL4300-5300/raw/master/data/Weekly_Assignment_data/HSP_prot.fast
 
+Then create a database specifically for the purpose of identifying specific proteins.
+  makeblastdb -in Unk_therm.faa -dbtype prot -title Unk_therm_proteins
+  
+Now that the database is created, we can compare the unknown protein sequences to sequences of known proteins within the same family.
+  blastp -db Unk_therm.faa -query HSP_prot.fasta -out HSP_BLAST.txt -outfmt 7
+  
+This last line creates a .txt output file which we can open in WinSCP. Here, we can see: 
+**How many HSPs were found in the unknown organism?
+  8+6+7+9+6+35= 71
+**Provide your justification for how many HSPs were in the organism (use information in the BLAST ouput E-value, length, percent ID, etc).
+  
+**How many HSP have paralogs?
+
+**Provide a justification for the presence of paralogs.
+
+**Upload your answers including a link to the github page to canvas.
+
+
+  
+  
+  
