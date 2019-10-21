@@ -12,9 +12,33 @@ Then create a database specifically for the purpose of identifying specific prot
 Now that the database is created, we can compare the unknown protein sequences to sequences of known proteins within the same family.
   blastp -db Unk_therm.faa -query HSP_prot.fasta -out HSP_BLAST.txt -outfmt 7
   
-This last line creates a .txt output file which we can open in WinSCP. Here, we can see: 
+This last line creates a .txt output file which we can open in WinSCP.
+
+Helpful site for next steps: 
+https://pythonforbiologists.com/tools-for-tabular-data
+
+To organize the data into showing only the information we want, query accession#, % ID, length, escore, and bitscore, and save it as it's own file.
+  cut  -f 1,3,4,11,12  HSP_BLAST.txt > edited.txt
+  sort -k11,11 -n -r edited.txt
+  NOTE: these do not get rid of the unwanted lines and still separates hits by query db.
+  
+  sed -i "/\b\#\b/d" filename
+  sed "/\b\#\b/d" HSP_BLAST.txt
+  NOTE: did not work
+
+This code removed all of the comment lines and created a new file with just the values and no separation of query db using -v which is reverse grep.
+  grep -vw "#" HSP_BLAST.txt > no_comments.txt
+  
+Now I can organize and edit the information I want more easily with the commands I used before.
+    cut  -f 1,3,4,11,12  no_comments.txt > edited.no_comments.txt
+Sorts by the 4th column in my edited data, which is evalue.    
+    sort -k4,4 -n -r edited.no_comments.txt 
+Counts how many total hits:
+    wc -l edited.no_comments.txt
+    
+. Here, we can see: 
 **How many HSPs were found in the unknown organism?
-  8+6+7+9+6+35= 71
+  A total of 71 were found.
 **Provide your justification for how many HSPs were in the organism (use information in the BLAST ouput E-value, length, percent ID, etc).
   
 **How many HSP have paralogs?
