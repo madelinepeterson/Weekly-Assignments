@@ -37,7 +37,8 @@ Counts how many total hits:
     wc -l edited.no_comments.txt
 
 To pull only those results that have a bit score of >31. Trying to sort by evalue gets tricky because of the scientific nomenclature. If there were more hits to sort through, we could build a pipe to sort this output by another parameter, like %ID or length.
-    awk '$5>31' edited.no_comments.txt | sort -k5,5 -n -r
+    awk '$5>31' edited.no_comments.txt | sort -k5,5 -n -r > HSP.top_bitscore.txt
+
     
 Here, we can see: 
 **How many HSPs were found in the unknown organism?
@@ -50,7 +51,7 @@ In addition to counting the "good hits" as having a bit score of above 31, we ca
 
 **Provide a justification for the presence of paralogs.
 
-**Upload your answers including a link to the github page to canvas.
+
 
 
   
