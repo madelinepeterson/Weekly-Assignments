@@ -35,11 +35,16 @@ Sorts by the 4th column in my edited data, which is evalue.
     sort -k4,4 -n -r edited.no_comments.txt 
 Counts how many total hits:
     wc -l edited.no_comments.txt
+
+To pull only those results that have a bit score of >31. Trying to sort by evalue gets tricky because of the scientific nomenclature. If there were more hits to sort through, we could build a pipe to sort this output by another parameter, like %ID or length.
+    awk '$5>31' edited.no_comments.txt | sort -k5,5 -n -r
     
-. Here, we can see: 
+Here, we can see: 
 **How many HSPs were found in the unknown organism?
-  A total of 71 were found.
+  A total of 71 were found upon the initial BLAST. Out of those 71 found, only 12 had a bit score above 31, a cutoff that is roughly equivalent to a p-value of 0.05. I would only count these 12 as "good hits".
+  
 **Provide your justification for how many HSPs were in the organism (use information in the BLAST ouput E-value, length, percent ID, etc).
+In addition to counting the "good hits" as having a bit score of above 31, we can see that these 12 hits show a shared squence at least 25% between the subject and the query sequence. High bit scores are also roughly telling of the evalue, with the highest bitscore hits also having the higher evalues. The top three hits, and this the 3 hits with the highest bitscore and evalue, also have the largest alignments lengths, 537, 559, and 632 respectively.
   
 **How many HSP have paralogs?
 
