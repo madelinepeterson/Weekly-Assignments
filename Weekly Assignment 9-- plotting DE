@@ -62,14 +62,58 @@ sig.res <- filter(res3, padj<=0.05) #8905
 #########################################################################
 #Weekly Assignment 9 begins
 
+#Adding a column that labels significant vs non-significant
+res=mutate(res,significance=ifelse(padj<0.05,"Significant","Non-significant"))
+#adding a column that labels the pos and negative logfold values to indicate mutant or control expresion differences
+res=mutate(res,origin=ifelse(log2FoldChange<0,"WT","Control"))
 
+# 1) A volcano plot showing differentially expressed genes - color the Control points blue and the Mutant points Red.
+ggplot(res) +
+  geom_point(aes(x=log2FoldChange, y=-log10(padj), colour=(WT=blue, Control=red)) +
+  ggtitle("Mov10 overexpression") +
+  xlab("log2 fold change") + 
+  ylab("-log10 adjusted p-value") +
+  #scale_y_continuous(limits = c(0,50)) +
+  theme(legend.position = "none",
+        plot.title = element_text(size = rel(1.5), hjust = 0.5),
+        axis.title = element_text(size = rel(1.25)))  +
+  theme_bw()
+#didn't work/plot
 
+#online volcano plot making instructions 
+(https://www.gettinggeneticsdone.com/2014/05/r-volcano-plots-to-visualize-rnaseq-microarray.html)
 
+# 1) A volcano plot showing differentially expressed genes - color the Control points blue and the Mutant points Red.
 
+ggplot(res) +
+  geom_point(aes(x=log2FoldChange, y=-log10(padj), colour=origin)) +
+  ggtitle("Mov10 overexpression") +
+  xlab("log2 fold change") + 
+  ylab("-log10 adjusted p-value")
 
+# 2) A box plot of the expression of the gene with the highest positive fold change
 
+plotCounts(dds, gene="Solyc11g028040.1.1", intgroup="dex", returnData=TRUE) %>%
+  ggplot(aes(dex,count))+
+  geom_boxplot(aes(fill=dex))+
+  scale_y_log10() + 
+  ggtitle("Solyc11g028040.1.1") 
 
+# 3)A box plot of the expression of the gene with the highest negative fold change
 
+plotCounts(dds, gene="Solyc09g089500.2.1", intgroup="dex", returnData=TRUE) %>%
+  ggplot(aes(dex,count))+
+  geom_boxplot(aes(fill=dex))+
+  scale_y_log10() + 
+  ggtitle("Solyc09g089500.2.1") 
+
+# 4) An MA. MA plots are log10 of the mean expression (baseMean) of a gene on the x-axis and log2FoldChange on the y-axis.
+
+ggplot(res) +
+  geom_point(aes(y=log2FoldChange, x=log10(baseMean))) +
+  ggtitle("MA plot") +
+  ylab("log2FoldChnage") +
+  xlab("log10(basemean)")
 
 
 
