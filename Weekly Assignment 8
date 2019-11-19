@@ -1,0 +1,61 @@
+# Genomics Weekly Assignment 8
+# performing a differential analysis
+
+install.packages("tidyverse")
+install.packages("readr")
+
+if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager") 
+BiocManager::install("DESeq2")
+
+library(readr)
+library(tidyverse)
+library(DESeq2)
+
+counts<- read.csv("WA_counts.csv")
+metadata<- read.csv("WA8_Metadata.csv")
+
+head(counts)
+head(metadata)
+
+class(counts)
+#data.frame
+class(metadata)
+
+#preparing data for DEseq only needs to be done if the data isn't already in data.frame format, but they both are
+names(counts)[-1]
+
+names(counts)[-1]==metadata$i..id
+all(names(counts)[-1]==metadata$id)
+#this line shows that the names do match by giving TRUE
+
+#this creates the needed "object" format to then run the analysis
+dds.data <- DESeqDataSetFromMatrix(countData=counts, 
+                                   colData=metadata, 
+                                   design=~dex, 
+                                   tidy=TRUE)
+
+#running DEseq
+dds <- DESeq(dds.data)
+#to look at the results of the analysis:
+res <- results(dds, tidy=TRUE)
+res2 <- tbl_df(res)
+
+#need to load dplyr package to access tbl_rf
+install.packages("dplyr")
+library(dplyr)
+#rerun
+res2 <- tbl_df(res)
+
+res3 <- arrange(res2, padj)
+
+#Filtering the data by significance (p value) and fold change (min of 2 fold change)
+#two coding lines-- one for the neg fold changes and one for pos fold change
+
+res4 <- filter(res3, padj<=0.05 & log2FoldChange>=2) #1489 sig genes
+res5 <- filter(res3, padj<=0.05 & log2FoldChange<=-2) #915 sig genes
+
+#Not counting fold change
+sig.res <- filter(res3, padj<=0.05) #8905
+
+#At this point in the tutorial there is a code for joining the annotation information with other gene information, but we don't have an annotation file
+
