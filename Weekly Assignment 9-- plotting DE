@@ -11,8 +11,13 @@ library(readr)
 library(tidyverse)
 library(DESeq2)
 
-counts<- read.csv("WA_counts.csv")
-metadata<- read.csv("WA8_Metadata.csv")
+#importing data into R
+WA_counts.csv <- read_csv("~/BL5300/weekly assignment 8/weekass8/WA_counts.csv") 
+WA8_Metadata.csv <- read_csv("~/BL5300/weekly assignment 8/weekass8/WA8_Metadata.csv")
+
+#preparing data for DEseq analysis
+counts<- read.csv("~/BL5300/weekly assignment 8/weekass8/WA_counts.csv")
+metadata<- read.csv("~/BL5300/weekly assignment 8/weekass8/WA8_Metadata.csv")
 
 head(counts)
 head(metadata)
@@ -20,6 +25,7 @@ head(metadata)
 class(counts)
 #data.frame
 class(metadata)
+#data.frame
 
 #preparing data for DEseq only needs to be done if the data isn't already in data.frame format, but they both are
 names(counts)[-1]
@@ -27,6 +33,8 @@ names(counts)[-1]
 names(counts)[-1]==metadata$i..id
 all(names(counts)[-1]==metadata$id)
 #this line shows that the names do match by giving TRUE
+names(counts)[-1]==metadata$id
+all(names(counts)[-1]==metadata$id)
 
 #this creates the needed "object" format to then run the analysis
 dds.data <- DESeqDataSetFromMatrix(countData=counts, 
@@ -39,13 +47,6 @@ dds <- DESeq(dds.data)
 #to look at the results of the analysis:
 res <- results(dds, tidy=TRUE)
 res2 <- tbl_df(res)
-
-#need to load dplyr package to access tbl_rf
-install.packages("dplyr")
-library(dplyr)
-#rerun
-res2 <- tbl_df(res)
-
 res3 <- arrange(res2, padj)
 
 #Filtering the data by significance (p value) and fold change (min of 2 fold change)
@@ -59,29 +60,13 @@ sig.res <- filter(res3, padj<=0.05) #8905
 
 #At this point in the tutorial there is a code for joining the annotation information with other gene information, but we don't have an annotation file
 
-#########################################################################
-#Weekly Assignment 9 begins
+### Weekly Assignment 9 ####
 
 #Adding a column that labels significant vs non-significant
 res=mutate(res,significance=ifelse(padj<0.05,"Significant","Non-significant"))
 #adding a column that labels the pos and negative logfold values to indicate mutant or control expresion differences
-res=mutate(res,origin=ifelse(log2FoldChange<0,"WT","Control"))
+res=mutate(res,origin=ifelse(log2FoldChange<0,"Control","Mutant"))
 
-# 1) A volcano plot showing differentially expressed genes - color the Control points blue and the Mutant points Red.
-ggplot(res) +
-  geom_point(aes(x=log2FoldChange, y=-log10(padj), colour=(WT=blue, Control=red)) +
-  ggtitle("Mov10 overexpression") +
-  xlab("log2 fold change") + 
-  ylab("-log10 adjusted p-value") +
-  #scale_y_continuous(limits = c(0,50)) +
-  theme(legend.position = "none",
-        plot.title = element_text(size = rel(1.5), hjust = 0.5),
-        axis.title = element_text(size = rel(1.25)))  +
-  theme_bw()
-#didn't work/plot
-
-#online volcano plot making instructions 
-(https://www.gettinggeneticsdone.com/2014/05/r-volcano-plots-to-visualize-rnaseq-microarray.html)
 
 # 1) A volcano plot showing differentially expressed genes - color the Control points blue and the Mutant points Red.
 
@@ -114,18 +99,3 @@ ggplot(res) +
   ggtitle("MA plot") +
   ylab("log2FoldChnage") +
   xlab("log10(basemean)")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
